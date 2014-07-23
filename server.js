@@ -3,8 +3,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var bodyParser = require('body-parser');
 
-app.use(bodyParser());
-app.use(bodyParser.json({type : 'application/vnd.api+json'}));
+app.use(bodyParser.json());
 
 var port = process.env.PORT || 1337;
 server.listen(port);
@@ -12,7 +11,6 @@ console.log("Server started, listening on port: " + port);
 
 /*
  * Serve dashboard for robot
- *
  */
 app.get('/dashboard', function(req, res) {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -22,18 +20,16 @@ app.get('/dashboard', function(req, res) {
 /*
  * Accepts single command for the robot. 
  * Request should be of the form 
- * { direction: "left/right/forward/backward", speed: 0-255, duration: <int>}
+ * { angle:<double>, distance: <double>}
  */
 app.post('/robot', function(req, res) {
 	console.log(req.body);
 
-  // parse data
-	var direction = req.body.direction,
-	speed = req.body.speed,
-	duration = req.body.duration;
+  var command = req.body;
 
-  // Send to robot client
-  io.emit('robotControl', { direction: direction, speed: speed, duration: duration });
+  // Send command to robot client
+  io.emit('robotControl', command);
+  res.send({message: 'command sent'});
 });
 
 /*
@@ -43,19 +39,17 @@ app.post('/robot', function(req, res) {
 app.post('/robot/list', function(req, res) {
 	console.log(req.body);
 
-  // parse data
 	var commandList = req.body;
   
   // pass array to the robot
   io.emit('robotControlList', commandList);
+  res.send({message: 'List sent'});
 });
 
 /*
  * Callbacks for different things
- *
  */
 io.on('connection', function(socket) {
- //socket.emit('robotControl', { direction:"left", speed: 200, duration: 2000 });
   socket.on('finishEvent', function(data) {
     console.log(data);
   });
