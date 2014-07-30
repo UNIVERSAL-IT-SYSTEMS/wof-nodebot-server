@@ -1,9 +1,9 @@
 # wof-nodebot-server
 
+_For more information read our [docs](http://ms-iot.github.io/windows-on-fridges)_
+
 ## Node socket server that runs on Azure
 Node server accepts post requests and sends messages to Galileo through websockets. 
-
-_For more informations view our [docs](http://ms-iot.github.io/windows-on-fridges)_
 
 ## Running Locally
 To run the server locally first install all the project dependencies. From the project directory run
