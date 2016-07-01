@@ -32,4 +32,6 @@ curl -v -H "Accept: application/json" -H "Content-type: application/json" -X POS
 You can also post a list of commands. Just post an array of the command objects to localhost:1337/robot/list
 
 
+===
 
+This project has adopted the [Microsoft Open Source Code of Conduct](http://microsoft.github.io/codeofconduct). For more information see the [Code of Conduct FAQ](http://microsoft.github.io/codeofconduct/faq.md) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments. 
